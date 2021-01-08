@@ -10,7 +10,7 @@ const pool4 = createPool({
   connectionLimit: 10
 });
 
-pool.on('connection', (connection) => {
+pool4.on('connection', (connection) => {
   connection.query('SET NAMES utf8')
 });
 
