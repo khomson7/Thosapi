@@ -22,7 +22,7 @@ module.exports = {
   },
   getIpVisit: callBack => {
 
-    pool4.query(
+    pool.query(
       `select date_format(jj,'%Y-%m-%d') as ddate,sum(sumpiset) as sumpiset,sum(sumsamun) as sumsamun
           from tbl_admiss_now
           WHERE jj between date(DATE_ADD(NOW(), INTERVAL -31 DAY))  AND date(DATE_ADD(NOW(), INTERVAL -1 DAY))
