@@ -1,5 +1,5 @@
 const pool = require("../config/database");
-const pool4 = require("../config/database2");
+const pool4 = require("../config/database4");
 module.exports = {
 
   getOpVisit: callBack => {
