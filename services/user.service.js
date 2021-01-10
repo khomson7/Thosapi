@@ -101,7 +101,7 @@ module.exports = {
     },
     getDateProcess: callBack => {
         pool2.query(
-            `select * from date_process where id = '1'`,
+            `select d.*,date_format(d.b_date,'%Y-%m-%d') as d_process from date_process d where id = '1'`,
             [],
             (error, results, fields) => {
                 if (error) {
