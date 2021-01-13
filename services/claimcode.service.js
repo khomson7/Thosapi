@@ -10,7 +10,7 @@ module.exports = {
             from visit_pttype v
             INNER JOIN vn_stat vn on vn.vn = v.vn
             INNER JOIN patient pt on pt.hn = vn.hn
-            where pt.cid = ? /*AND vn.vstdate = date(NOW())*/
+            where pt.cid = ? AND vn.vstdate = date(NOW())
             ORDER BY vn ASC
             limit 1`,
             [cid],
