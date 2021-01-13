@@ -5,7 +5,7 @@ module.exports = {
     getVisit: (cid, callBack) => {
         pool.query(
             `select v.vn,concat(date_format(vn.vstdate,'%d/%m/'),date_format(vn.vstdate,'%Y')+543) as vstdate,date_format(vn.vstdate,'%Y-%m-%d') as vstdate2,pt.cid,concat(pt.pname,pt.fname,' ',pt.lname) as ptname
-            ,v.pttype
+            ,v.pttype,vn.hn
             ,(SELECT name from pttype where pttype = v.pttype) as pttname
             from visit_pttype v
             INNER JOIN vn_stat vn on vn.vn = v.vn
