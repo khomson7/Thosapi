@@ -404,10 +404,7 @@ order by t.vn asc`,
             t
             CROSS JOIN (SELECT @cnt := (select MAX(pp_special_id) FROM pp_special)) AS dummy 
             WHERE t.hn in(select hn  FROM patient pt where pt.chwpart = ? AND pt.amppart = ? AND TIMESTAMPDIFF(YEAR,pt.birthday,?) >= 15)
-            AND (select (select doctorcode from opduser o where o.loginname = staff ) 
-            from opdscreen_cc_history where vn = t.vn and vstdate = @bdate  GROUP BY vn) is not null
-            order by pp_special_id,t.vn asc
-`,
+            order by pp_special_id,t.vn asc`,
             [bdate, process.env.HOSPCODE, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR,
                 process.env.CHW_PART, process.env.AMP_PART, process.env.BYEAR
             ],
