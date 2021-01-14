@@ -68,6 +68,31 @@ module.exports = {
             }
         );
     },
+    getClaimreport: (bdate,edate, callBack) => {
+        pool.query(
+            `select v.vn,v.claim_code,IFNULL((select concat(hosptype,name) from hospcode where hospcode = vn.hospmain),'-') as hosmain
+            ,IFNULL((select province_name from hospcode where hospcode = vn.hospmain),'-') as province
+                        ,vn.hospsub
+                        ,v.pttype,concat(date_format(vn.vstdate,'%d/%m/'),date_format(vn.vstdate,'%Y')+543) as vstdate2,pt.cid,concat(pt.pname,pt.fname,' ',pt.lname) as ptname 
+                        ,v.staff
+                                    ,(SELECT name from pttype where pttype = v.pttype) as pttname
+                                    from visit_pttype v
+                                    INNER JOIN vn_stat vn on vn.vn = v.vn
+                                    INNER JOIN patient pt on pt.hn = vn.hn
+                                    where vn.vstdate BETWEEN ? AND ? AND  (claim_code not in('') and claim_code is not NULL)     
+                                    ORDER BY vn DESC`,
+            [bdate,edate],
+
+
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
 
 
 }

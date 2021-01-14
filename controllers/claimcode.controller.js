@@ -1,4 +1,4 @@
-const { getVisit, getClaim, getUserclaim } = require("../services/claimcode.service");
+const { getVisit, getClaim, getUserclaim, getClaimreport } = require("../services/claimcode.service");
 
 module.exports = {
 
@@ -80,7 +80,27 @@ module.exports = {
                 results
             );
         });
+    },
+    getClaimreport: (req, res) => {
+        const bdate = req.params.bdate;
+        const edate = req.params.edate;
+      //  const doctor = req.params.doctor;
+        getClaimreport(bdate, edate , (err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            if (!results) {
+                return res.json({
+                    success: 0,
+                    message: "Record not Found"
+                });
+            }
+            // results.password = undefined;
+            
+            return res.json(
+               results);
+        });
     }
-
 
 };
