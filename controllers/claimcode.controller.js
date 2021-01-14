@@ -1,4 +1,4 @@
-const { getVisit, getClaim } = require("../services/claimcode.service");
+const { getVisit, getClaim, getUserclaim } = require("../services/claimcode.service");
 
 module.exports = {
 
@@ -61,6 +61,26 @@ module.exports = {
                 results
             );
         });
+    },
+    getUserclaime: (req, res) => {
+        const user = req.params.user;
+        getUserclaim(user,(err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            if (!results) {
+                return res.json({
+                    success: 0,
+                    message: "Reccord Not Found"
+                });
+            }
+
+            return res.json(
+                results
+            );
+        });
     }
+
 
 };
