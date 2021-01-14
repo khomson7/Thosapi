@@ -29,7 +29,7 @@ module.exports = {
 
     getPpSpecial: (bdate, doctor, callBack) => {
         pool.query(
-            `   select (@cnt := @cnt + 1) AS pp_special_id,t.vn,t.smoking_id as pp_special_type_id,? as doctor,'1' as pp_special_service_place_type_id
+            `select (@cnt := @cnt + 1) AS pp_special_id,t.vn,t.smoking_id as pp_special_type_id,? as doctor,'1' as pp_special_service_place_type_id
             ,date_format(DATE_ADD(concat(t.vstdate,' ',t.vsttime), INTERVAL 10 MINUTE),'%Y-%m-%d %H:%i:%s') as entry_datetime,? as dest_hospcode,null as hos_guid,null as pp_special_text,t.hn FROM
             (select * FROM
             (select t.*,(select pp_special_type_id from pp_special_type WHERE pp_special_code = t.smoking) as smoking_id,vn.age_y 
