@@ -71,7 +71,7 @@ module.exports = {
     getClaimreport: (bdate,edate, callBack) => {
         pool.query(
             `select v.vn,v.claim_code,IFNULL((select concat(hosptype,name) from hospcode where hospcode = vn.hospmain),'-') as hosmain
-            ,IFNULL((select province_name from hospcode where hospcode = vn.hospmain),'-') as province
+            ,IFNULL((select province_name from hospcode where hospcode = vn.hospmain),'-') as province,vn.hn
                         ,vn.hospsub
                         ,v.pttype,concat(date_format(vn.vstdate,'%d/%m/'),date_format(vn.vstdate,'%Y')+543) as vstdate2,pt.cid,concat(pt.pname,pt.fname,' ',pt.lname) as ptname 
                         ,v.staff
