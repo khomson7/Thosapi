@@ -1,0 +1,82 @@
+ติดตั้ง
+  database hosxp ;
+
+/*ปรับโครงสร้าง smoking_type and drinking_type*/
+1.
+ALTER TABLE smoking_type
+ADD COLUMN IF NOT EXISTS pp_special_code VARCHAR(7)  DEFAULT NULL 
+, ADD COLUMN IF NOT EXISTS pp_special_code2 VARCHAR(7)  DEFAULT NULL ;
+
+ALTER TABLE drinking_type
+ADD COLUMN IF NOT EXISTS pp_special_code VARCHAR(7)  DEFAULT NULL 
+, ADD COLUMN IF NOT EXISTS pp_special_code2 VARCHAR(7)  DEFAULT NULL ;
+
+2. ติดตั้งการใช้งาน api 
+ 1. cd ToolsApi
+   
+ 2./*********************************************************/
+ แก้ไข env.txt เป็น .env
+ส่วนของการเชื่อมต่อ database hosxp / database tools-hosdb(สร้างเพิ่มไว้ที่ต่างหาก)
+และส่วนการประมวลผล
+CHW_PART=32        #รหัสจังหวัด
+AMP_PART=05        #รหัสอำเภอ
+HOSPCODE=10918     #รหัสหน่วยบริการ
+BEFOR_BYEAR=2020-09-30  #วันสิ้นสุดปีงบประมาณที่แล้ว
+BYEAR=2021-01-01 #วันที่ 1 มกราคม ปีงบประมาณล่าสุดใช้คำนวณอายุ
+
+/**********************************************************/
+
+3. npm install -g pm2 nodemon
+4. npm install
+5. npm audit fix --force
+5.1 npm install อีกครั้ง
+6. กรณีลงบน windows
+ 6.1 npm install pm2-windows-startup -g
+ 6.2 pm2-startup install
+7.กรณี Linux
+ 7.1 pm2 startup
+8.start การใช้งาน API ด้วยคำสั่ง pm2 start bin/www -i 2 --name "ToolsApi"
+9. pm2 save
+
+การ update API
+1.เข้าไปยัง Folder ที่จัดเก็บ API
+2.ใช้คำสั่ง Update source code -> git pull
+3.update package ด้วยคำสั่ง npm i
+4.restart PM2 ด้วยคำสั่ง pm2 restart "ToolsApi" หรือ pm2 reload "ToolsApi"
+
+ทดสอบเรียกการใช้งาน 
+http://127.0.0.1:3012/
+
+ส่วนหน้าเว็บ
+เปิด git bash 
+cd เข้าไปใน directory web root
+เช่น xampp จะอยู่ใน xampp/htdocs/
+จากนั้น Clone project  โดยใช้คำสั่ง
+
+git clone https://github.com/khomson7/ToolsHos.git ToolsHos
+
+แล้วแก้ไข file config ใน folder
+
+ToolsHos/config/
+db_php แก้เป็น db.php
+ 	 - แก้ค่าการเชื่อมต่อ database tools-hosdb
+
+params_php แก้เป็น params.php
+	- แก้ค่าการเชื่อมต่อ 'webservice' => 'http://127.0.0.1'  //แก้ไขการเชื่อมต่อกับ API
+        'email'=>'admin@toolshos.test', // ใส่ Email ใช้  auto-login กรณีให้ระบบทำงานอัตโนมัติ
+        'ps'=>'##Admin##' //ใส่ Password ของ user
+
+แตก file vendor.zip ไว้ใน folder ของ  ToolsHos
+
+ToolHos/vendor
+
+ทดสอบใช้งาน 
+http://127.0.0.1/ToolsHos
+
+
+
+
+
+
+
+

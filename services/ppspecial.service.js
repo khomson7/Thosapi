@@ -310,7 +310,7 @@ order by t.vn asc`,
         pool.query(
             `select * FROM
          (select (@cnt := @cnt + 1) AS pp_special_id,t.vn,t.smoking_id as pp_special_type_id,(select (select doctorcode from opduser o where o.loginname = staff ) 
-            from opdscreen_cc_history where vn = t.vn and vstdate = ?  GROUP BY vn) as doctor,'1' as pp_special_service_place_type_id
+            from /*(opdscreen_cc_history)  (ovst) change pcu */ ovst where vn = t.vn  GROUP BY vn) as doctor,'1' as pp_special_service_place_type_id
                         ,date_format(DATE_ADD(concat(t.vstdate,' ',t.vsttime), INTERVAL 10 MINUTE),'%Y-%m-%d %H:%i:%s') as entry_datetime,? as dest_hospcode,t.hn
             
              FROM
@@ -318,12 +318,15 @@ order by t.vn asc`,
             (select t.*,pst.pp_special_type_id as smoking_id FROM
             (select op.vstdate,op.vsttime,op.vn,op.hn
             ,CASE 
+            
                                     WHEN smoking_type_id in('1','17') THEN '1B52'
                                     WHEN smoking_type_id in('10') THEN '1B501'
                                     WHEN smoking_type_id in('11') THEN '1B502'
                                     WHEN smoking_type_id in('12','13') THEN '1B503'
                                     WHEN smoking_type_id in('14') THEN '1B542'
                                     WHEN smoking_type_id in('15','16') THEN '1B562'
+
+                                    
                                     end as smoking 
                                     from opdscreen op 
                                     WHERE op.vstdate = ?
@@ -408,7 +411,7 @@ order by t.vn asc`,
             order by pp_special_id,t.vn asc
             )t2
 where t2.doctor is not NULL`,
-            [bdate, process.env.HOSPCODE, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR,
+            [process.env.HOSPCODE, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR,
                 process.env.CHW_PART, process.env.AMP_PART, process.env.BYEAR
             ],
 
