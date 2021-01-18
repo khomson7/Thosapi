@@ -310,7 +310,7 @@ order by t.vn asc`,
         pool.query(
             `select * FROM
          (select (@cnt := @cnt + 1) AS pp_special_id,t.vn,t.smoking_id as pp_special_type_id,(select (select doctorcode from opduser o where o.loginname = staff ) 
-            from /*(opdscreen_cc_history)  (ovst) change pcu */ ovst where vn = t.vn  GROUP BY vn) as doctor,'1' as pp_special_service_place_type_id
+            from /*(opdscreen_cc_history)  (ovst) change pcu */ opdscreen_cc_history where vn = t.vn  GROUP BY vn) as doctor,'1' as pp_special_service_place_type_id
                         ,date_format(DATE_ADD(concat(t.vstdate,' ',t.vsttime), INTERVAL 10 MINUTE),'%Y-%m-%d %H:%i:%s') as entry_datetime,? as dest_hospcode,t.hn
             
              FROM
