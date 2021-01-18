@@ -308,7 +308,8 @@ order by t.vn asc`,
 
     getAllSm: (bdate, callBack) => {
         pool.query(
-            `select (@cnt := @cnt + 1) AS pp_special_id,t.vn,t.smoking_id as pp_special_type_id,(select (select doctorcode from opduser o where o.loginname = staff ) 
+            `select * FROM
+         (select (@cnt := @cnt + 1) AS pp_special_id,t.vn,t.smoking_id as pp_special_type_id,(select (select doctorcode from opduser o where o.loginname = staff ) 
             from opdscreen_cc_history where vn = t.vn and vstdate = ?  GROUP BY vn) as doctor,'1' as pp_special_service_place_type_id
                         ,date_format(DATE_ADD(concat(t.vstdate,' ',t.vsttime), INTERVAL 10 MINUTE),'%Y-%m-%d %H:%i:%s') as entry_datetime,? as dest_hospcode,t.hn
             
@@ -398,13 +399,15 @@ order by t.vn asc`,
             
             
             )t
-            LEFT JOIN pp_special_type pst on pst.pp_special_code = t.smoking
+            LEFT JOIN pp_special_type pst on pst.pp_special_code = (t.smoking COLLATE utf8_unicode_ci)
             WHERE t.smoking is not null)
             
             t
             CROSS JOIN (SELECT @cnt := (select MAX(pp_special_id) FROM pp_special)) AS dummy 
             WHERE t.hn in(select hn  FROM patient pt where pt.chwpart = ? AND pt.amppart = ? AND TIMESTAMPDIFF(YEAR,pt.birthday,?) >= 15)
-            order by pp_special_id,t.vn asc`,
+            order by pp_special_id,t.vn asc
+            )t2
+where t2.doctor is not NULL`,
             [bdate, process.env.HOSPCODE, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR,
                 process.env.CHW_PART, process.env.AMP_PART, process.env.BYEAR
             ],
