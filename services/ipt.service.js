@@ -47,4 +47,39 @@ module.exports = {
             }
         )
     },
+    getDataset12: (callBack) => {
+        pool.query(`select date_format(t.date_count,'%Y-%m-%d') as date_count,sum(ad_count) as ad_count 
+        ,
+        (select ad_count from
+        (select t.date_count,sum(ad_count) as ad_count from 
+        (select date_count,ad_count as ad_count
+        ,CASE 
+        WHEN ward in('10') THEN 'ICU'
+        ELSE 'IPD' END as ward
+        from risk_nrls_dataset_rr001_2)t
+        where t.ward = 'ICU'
+        GROUP BY t.date_count
+        ORDER BY t.date_count asc)t2
+        where t2.date_count = t.date_count) as icu_count
+        
+        from 
+        (select date_count,ad_count as ad_count
+        ,CASE 
+        WHEN ward in('10') THEN 'ICU'
+        ELSE 'IPD' END as ward
+        from risk_nrls_dataset_rr001_2)t
+        where t.ward = 'IPD'
+        AND TIMESTAMPDIFF(MONTH,t.date_count,NOW()) < 2
+        GROUP BY t.date_count
+        ORDER BY t.date_count asc
+        `,
+            [],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        )
+    }
 };

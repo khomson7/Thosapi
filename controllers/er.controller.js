@@ -4,8 +4,8 @@ const {
 
 module.exports = {
     getErLevel: (req, res) => {
-        const cid = req.params.cid;
-        getErLevel(cid, (err, results) => {
+       // const cid = req.params.cid;
+        getErLevel( (err, results) => {
             if (err) {
                 console.log(err);
                 return;
@@ -18,6 +18,22 @@ module.exports = {
             );
             // });
         });
+    },
+    getErLevel2: (req, res) => {
+       // const cid = req.params.cid;
+        getErLevel( (err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            results.cid = undefined;
+
+            return res.json({
+                success: 1,
+                data: results
+            });
+        });
     }
+
 
 };

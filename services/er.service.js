@@ -2,7 +2,7 @@ const pool = require("../config/database");
 
 module.exports = {
 
-    getErLevel: (cid, callBack) => {
+    getErLevel: (callBack) => {
         pool.query(`select 
         date_format(vstdate,'%Y-%m-%d') as vdate
         ,COUNT(CASE WHEN  er_emergency_level_id = 1 THEN vn END)  R
@@ -11,10 +11,10 @@ module.exports = {
         ,COUNT(CASE WHEN  er_emergency_level_id = 4 THEN vn END)  SU
         ,COUNT(CASE WHEN  er_emergency_level_id = 5 THEN vn END)  N
         from er_regist
-        WHERE TIMESTAMPDIFF(DAY,vstdate,NOW()) BETWEEN 0 AND 10
+        WHERE TIMESTAMPDIFF(DAY,vstdate,NOW()) BETWEEN 0 AND 30
         GROUP BY vstdate
-        ORDER BY vstdate DESC`,
-            [cid],
+        ORDER BY vstdate ASC`,
+            [],
             (error, results, fields) => {
                 if (error) {
                     callBack(error);
