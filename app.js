@@ -15,6 +15,7 @@ var iptsRouter = require('./routes/ipts');
 var episRouter = require('./routes/epis');
 var apiRouter = require('./routes/api');
 var claimcodesRouter = require('./routes/claimcodes');
+var ersRouter = require('./routes/ers');
 
 
 var app = express();
@@ -48,6 +49,7 @@ app.use('/ipts', iptsRouter);
 app.use('/epis', episRouter);
 app.use('/api', apiRouter);
 app.use('/claimcodes', claimcodesRouter);
+app.use('/ers', ersRouter);
 
 
 // catch 404 and forward to error handler
