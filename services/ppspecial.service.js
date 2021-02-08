@@ -338,18 +338,9 @@ order by t.vn asc`,
             
             (select t.*,pst.pp_special_type_id as smoking_id FROM
             (select op.vstdate,op.vsttime,op.vn,op.hn
-            ,CASE 
-            
-                                    WHEN smoking_type_id in('1','17') THEN '1B52'
-                                    WHEN smoking_type_id in('10') THEN '1B501'
-                                    WHEN smoking_type_id in('11') THEN '1B502'
-                                    WHEN smoking_type_id in('12','13') THEN '1B503'
-                                    WHEN smoking_type_id in('14') THEN '1B542'
-                                    WHEN smoking_type_id in('15','16') THEN '1B562'
-
-                                    
-                                    end as smoking 
-                                    from opdscreen op 
+                ,s.pp_special_code as smoking 
+                from opdscreen op 
+                LEFT JOIN smoking_type s on s.smoking_type_id = op.smoking_type_id
                                     WHERE op.vstdate = ?
             AND op.hn not in (select ps.hn from pp_special ps
                                     INNER JOIN doctor d on d.code = ps.doctor
@@ -363,14 +354,9 @@ order by t.vn asc`,
             UNION
             
             select op.vstdate,op.vsttime,op.vn,op.hn
-                                    ,CASE 
-                                    WHEN smoking_type_id in('10') THEN '1B530'
-                                    WHEN smoking_type_id in('11') THEN '1B531'
-                                    WHEN smoking_type_id in('12','13') THEN '1B531'
-                                    WHEN smoking_type_id in('14') THEN '1B531'
-                                    WHEN smoking_type_id in('15','16') THEN '1B531'
-                                    end as smoking
-                                    from opdscreen op 
+            ,s.pp_special_code2 as smoking 
+            from opdscreen op 
+            LEFT JOIN smoking_type s on s.smoking_type_id = op.smoking_type_id
                                     WHERE op.vstdate = ?
             AND op.hn not in (select ps.hn from pp_special ps
                                     INNER JOIN doctor d on d.code = ps.doctor
@@ -386,14 +372,9 @@ order by t.vn asc`,
             
             
             select op.vstdate,op.vsttime,op.vn,op.hn
-            ,CASE 
-                                    WHEN drinking_type_id in('1','14') THEN '1B600'
-                                    WHEN drinking_type_id in('11','12','13') THEN '1B601'
-                                    WHEN drinking_type_id in('7') THEN '1B602'
-                                    WHEN drinking_type_id in('8') THEN '1B603'
-                                    WHEN drinking_type_id in('9','10') THEN '1B604'
-                                    end as drinking
+            ,s.pp_special_code as drinking 
                                     from opdscreen op 
+                                    LEFT JOIN drinking_type s on s.drinking_type_id = op.drinking_type_id 
                                     WHERE op.vstdate = ?
             AND op.hn not in (select ps.hn from pp_special ps
                                     INNER JOIN doctor d on d.code = ps.doctor
@@ -406,12 +387,9 @@ order by t.vn asc`,
                                     UNION
             
             select op.vstdate,op.vsttime,op.vn,op.hn
-                            ,CASE 
-                            WHEN drinking_type_id in('7') THEN '1B610'
-                            WHEN drinking_type_id in('8') THEN '1B611'
-                            WHEN drinking_type_id in('9','10') THEN '1B611'
-                            end as drinking
-                            from opdscreen op 
+            ,s.pp_special_code2 as drinking 
+            from opdscreen op 
+            LEFT JOIN drinking_type s on s.drinking_type_id = op.drinking_type_id
                             WHERE op.vstdate = ?
             AND op.hn not in (select ps.hn from pp_special ps
                                     INNER JOIN doctor d on d.code = ps.doctor
@@ -423,16 +401,15 @@ order by t.vn asc`,
             
             
             )t
-            LEFT JOIN pp_special_type pst on pst.pp_special_code = (t.smoking COLLATE utf8_unicode_ci)
+            LEFT JOIN pp_special_type pst on pst.pp_special_code = t.smoking
             WHERE t.smoking is not null)
             
             t
             CROSS JOIN (SELECT @cnt := (select MAX(pp_special_id) FROM pp_special)) AS dummy 
             WHERE t.hn in(select hn  FROM patient pt where pt.chwpart = ? AND pt.amppart = ? AND TIMESTAMPDIFF(YEAR,pt.birthday,?) >= 15)
-            order by pp_special_id,t.vn asc
+            order by t.vn asc
             )t2
-where t2.doctor is not NULL 
-order by t2.pp_special_id,t2.vn asc`,
+where t2.doctor is not NULL`,
             [hospcode, bdate, befor_byear, bdate, befor_byear, bdate, befor_byear, bdate, befor_byear,
                 chwpart, amppart, byear
             ],
