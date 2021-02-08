@@ -1,4 +1,5 @@
 const pool = require('../config/database');
+const pool2 = require('../config/database2');
 
 module.exports = {
 
@@ -16,6 +17,26 @@ module.exports = {
                 data.pp_special_service_place_type_id,
                 data.entry_datetime,
                 data.dest_hospcode,
+                data.hn
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    createPpspecialmonit: (data, callBack) => {
+        pool2.query(
+            `replace into pp_special_monit( vn, entry_datetime, hn) 
+                      values(?,?,?)`,
+
+            [
+                
+                data.vn,
+                data.entry_datetime,       
                 data.hn
             ],
             (error, results, fields) => {
@@ -306,7 +327,7 @@ order by t.vn asc`,
         )
     },
 
-    getAllSm: (bdate, callBack) => {
+    getAllSm: (hospcode, chwpart, amppart, befor_byear, byear, bdate, callBack) => {
         pool.query(
             `select * FROM
          (select (@cnt := @cnt + 1) AS pp_special_id,t.vn,t.smoking_id as pp_special_type_id,(select (select doctorcode from opduser o where o.loginname = staff ) 
@@ -410,9 +431,10 @@ order by t.vn asc`,
             WHERE t.hn in(select hn  FROM patient pt where pt.chwpart = ? AND pt.amppart = ? AND TIMESTAMPDIFF(YEAR,pt.birthday,?) >= 15)
             order by pp_special_id,t.vn asc
             )t2
-where t2.doctor is not NULL`,
-            [process.env.HOSPCODE, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR, bdate, process.env.BEFOR_BYEAR,
-                process.env.CHW_PART, process.env.AMP_PART, process.env.BYEAR
+where t2.doctor is not NULL 
+order by t2.pp_special_id,t2.vn asc`,
+            [hospcode, bdate, befor_byear, bdate, befor_byear, bdate, befor_byear, bdate, befor_byear,
+                chwpart, amppart, byear
             ],
 
 

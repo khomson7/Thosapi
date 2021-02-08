@@ -5,7 +5,8 @@ const {
     getDepress,
     getAllSm,
     CreatePpSp,
-    getUpdate
+    getUpdate,
+    createPpspecialmonit
 
 } = require('../services/ppspecial.service');
 
@@ -16,6 +17,23 @@ module.exports = {
         // const salt = genSaltSync(10);
         // body.password = hashSync(body.password, salt);
         createPpspecial(body, (err, results) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    success: 0,
+                    message: "Database connection errror"
+                });
+            }
+            return res.status(200).json({
+                success: 1,
+                data: results
+            });
+        });
+    },
+
+    createPpspecialmonit: (req, res) => {
+        const body = req.body;
+        createPpspecialmonit(body, (err, results) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({
@@ -99,9 +117,13 @@ module.exports = {
     },
 
     getAllSm: (req, res) => {
+        const hospcode = req.params.hospcode;
+        const chwpart = req.params.chwpart;
+        const amppart = req.params.amppart;
+        const befor_byear = req.params.befor_byear;
+        const byear = req.params.byear;
         const bdate = req.params.bdate;
-      //  const doctor = req.params.doctor;
-        getAllSm(bdate,  (err, results) => {
+        getAllSm( hospcode, chwpart, amppart, befor_byear, byear, bdate,  (err, results) => {
             if (err) {
                 console.log(err);
                 return;
