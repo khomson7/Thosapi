@@ -406,7 +406,7 @@ order by t.vn asc`,
             
             t
             CROSS JOIN (SELECT @cnt := (select MAX(pp_special_id) FROM pp_special)) AS dummy 
-            WHERE t.hn in(select hn  FROM patient pt where pt.chwpart = ? AND pt.amppart = ? AND TIMESTAMPDIFF(YEAR,pt.birthday,?) >= 15)
+            WHERE t.hn in(select hn  FROM patient pt,person p where pt.hn = p.patient_hn AND pt.chwpart = ? AND pt.amppart = ? AND TIMESTAMPDIFF(YEAR,pt.birthday,?) >= 15 AND p.house_regist_type_id in('1','3'))
             order by t.vn asc
             )t2
 where t2.doctor is not NULL`,
