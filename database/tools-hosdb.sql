@@ -10,10 +10,45 @@ Target Server Type    : MYSQL
 Target Server Version : 50531
 File Encoding         : 65001
 
-Date: 2021-01-18 20:38:11
+Date: 2021-02-09 07:02:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for accident
+-- ----------------------------
+DROP TABLE IF EXISTS `accident`;
+CREATE TABLE `accident` (
+  `HOSPCODE` varchar(255) DEFAULT NULL,
+  `PID` varchar(255) DEFAULT NULL,
+  `SEQ` varchar(255) DEFAULT NULL,
+  `DATETIME_SERV` varchar(255) DEFAULT NULL,
+  `DATETIME_AE` varchar(255) DEFAULT NULL,
+  `AETYPE` varchar(255) DEFAULT NULL,
+  `AEPLACE` varchar(255) DEFAULT NULL,
+  `TYPEIN_AE` varchar(255) DEFAULT NULL,
+  `TRAFFIC` varchar(255) DEFAULT NULL,
+  `VEHICLE` varchar(255) DEFAULT NULL,
+  `ALCOHOL` varchar(255) DEFAULT NULL,
+  `NACROTIC_DRUG` varchar(255) DEFAULT NULL,
+  `BELT` varchar(255) DEFAULT NULL,
+  `HELMET` varchar(255) DEFAULT NULL,
+  `AIRWAY` varchar(255) DEFAULT NULL,
+  `STOPBLEED` varchar(255) DEFAULT NULL,
+  `SPLINT` varchar(255) DEFAULT NULL,
+  `FLUID` varchar(255) DEFAULT NULL,
+  `URGENCY` varchar(255) DEFAULT NULL,
+  `COMA_EYE` varchar(255) DEFAULT NULL,
+  `COMA_SPEAK` varchar(255) DEFAULT NULL,
+  `COMA_MOVEMENT` varchar(255) DEFAULT NULL,
+  `D_UPDATE` varchar(255) DEFAULT NULL,
+  `CID` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of accident
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for auth_assignment
@@ -31,7 +66,9 @@ CREATE TABLE `auth_assignment` (
 -- ----------------------------
 -- Records of auth_assignment
 -- ----------------------------
+INSERT INTO `auth_assignment` VALUES ('claimcode', '2', '1612819710');
 INSERT INTO `auth_assignment` VALUES ('superadmin', '1', '1591337718');
+INSERT INTO `auth_assignment` VALUES ('งานสุขภาพจิต', '3', '1612819717');
 
 -- ----------------------------
 -- Table structure for auth_item
@@ -73,6 +110,7 @@ INSERT INTO `auth_item` VALUES ('/admin/permission/*', '2', null, null, null, '1
 INSERT INTO `auth_item` VALUES ('/admin/permission/assign', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/admin/permission/create', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/admin/permission/delete', '2', null, null, null, '1591333020', '1591333020');
+INSERT INTO `auth_item` VALUES ('/admin/permission/get-users', '2', null, null, null, '1612806632', '1612806632');
 INSERT INTO `auth_item` VALUES ('/admin/permission/index', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/admin/permission/remove', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/admin/permission/update', '2', null, null, null, '1591333020', '1591333020');
@@ -81,6 +119,7 @@ INSERT INTO `auth_item` VALUES ('/admin/role/*', '2', null, null, null, '1591333
 INSERT INTO `auth_item` VALUES ('/admin/role/assign', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/admin/role/create', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/admin/role/delete', '2', null, null, null, '1591333020', '1591333020');
+INSERT INTO `auth_item` VALUES ('/admin/role/get-users', '2', null, null, null, '1612806632', '1612806632');
 INSERT INTO `auth_item` VALUES ('/admin/role/index', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/admin/role/remove', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/admin/role/update', '2', null, null, null, '1591333020', '1591333020');
@@ -143,14 +182,20 @@ INSERT INTO `auth_item` VALUES ('/gridview/*', '2', null, null, null, '159133301
 INSERT INTO `auth_item` VALUES ('/gridview/export/*', '2', null, null, null, '1591333019', '1591333019');
 INSERT INTO `auth_item` VALUES ('/gridview/export/download', '2', null, null, null, '1591333010', '1591333010');
 INSERT INTO `auth_item` VALUES ('/hosxp/*', '2', null, null, null, '1610507302', '1610507302');
+INSERT INTO `auth_item` VALUES ('/hosxp/config/*', '2', null, null, null, '1612806632', '1612806632');
+INSERT INTO `auth_item` VALUES ('/hosxp/config/index', '2', null, null, null, '1612806632', '1612806632');
+INSERT INTO `auth_item` VALUES ('/hosxp/config/update', '2', null, null, null, '1612806632', '1612806632');
+INSERT INTO `auth_item` VALUES ('/hosxp/config/updatebyear', '2', null, null, null, '1612822085', '1612822085');
 INSERT INTO `auth_item` VALUES ('/hosxp/default/*', '2', null, null, null, '1610507302', '1610507302');
 INSERT INTO `auth_item` VALUES ('/hosxp/default/claimcode', '2', null, null, null, '1610507302', '1610507302');
 INSERT INTO `auth_item` VALUES ('/hosxp/default/claimcodeupdate', '2', null, null, null, '1610507302', '1610507302');
 INSERT INTO `auth_item` VALUES ('/hosxp/default/index', '2', null, null, null, '1610507302', '1610507302');
 INSERT INTO `auth_item` VALUES ('/hosxp/default/report1', '2', null, null, null, '1610604037', '1610604037');
+INSERT INTO `auth_item` VALUES ('/hosxp/default/sm-dr', '2', null, null, null, '1612806632', '1612806632');
 INSERT INTO `auth_item` VALUES ('/hosxp/visit-pttype/*', '2', null, null, null, '1610507302', '1610507302');
 INSERT INTO `auth_item` VALUES ('/hosxp/visit-pttype/claimcode', '2', null, null, null, '1610507302', '1610507302');
 INSERT INTO `auth_item` VALUES ('/hosxp/visit-pttype/index', '2', null, null, null, '1610507302', '1610507302');
+INSERT INTO `auth_item` VALUES ('/hosxp/visit-pttype/test-error', '2', null, null, null, '1612806632', '1612806632');
 INSERT INTO `auth_item` VALUES ('/hosxp/visit-pttype/update', '2', null, null, null, '1610507302', '1610507302');
 INSERT INTO `auth_item` VALUES ('/ipt/*', '2', null, null, null, '1592650323', '1592650323');
 INSERT INTO `auth_item` VALUES ('/ipt/default/*', '2', null, null, null, '1592650323', '1592650323');
@@ -181,6 +226,7 @@ INSERT INTO `auth_item` VALUES ('/rbac/rule/update', '2', null, null, null, '159
 INSERT INTO `auth_item` VALUES ('/site/*', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/site/about', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/site/api-err', '2', null, null, null, '1591333020', '1591333020');
+INSERT INTO `auth_item` VALUES ('/site/api-error', '2', null, null, null, '1612806632', '1612806632');
 INSERT INTO `auth_item` VALUES ('/site/auto-login', '2', null, null, null, '1609767473', '1609767473');
 INSERT INTO `auth_item` VALUES ('/site/captcha', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/site/contact', '2', null, null, null, '1591333020', '1591333020');
@@ -223,10 +269,15 @@ INSERT INTO `auth_item` VALUES ('/user/settings/delete', '2', null, null, null, 
 INSERT INTO `auth_item` VALUES ('/user/settings/disconnect', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/user/settings/networks', '2', null, null, null, '1591333020', '1591333020');
 INSERT INTO `auth_item` VALUES ('/user/settings/profile', '2', null, null, null, '1591333020', '1591333020');
-INSERT INTO `auth_item` VALUES ('claimcode', '2', null, null, null, '1610507351', '1610609435');
+INSERT INTO `auth_item` VALUES ('/wsc/*', '2', null, null, null, '1612806632', '1612806632');
+INSERT INTO `auth_item` VALUES ('/wsc/default/*', '2', null, null, null, '1612806632', '1612806632');
+INSERT INTO `auth_item` VALUES ('/wsc/default/index', '2', null, null, null, '1612806632', '1612806632');
+INSERT INTO `auth_item` VALUES ('/wsc/default/smdrfromhos', '2', null, null, null, '1612806632', '1612806632');
+INSERT INTO `auth_item` VALUES ('claimcode', '2', null, null, null, '1610507351', '1612807276');
 INSERT INTO `auth_item` VALUES ('PrMenu', '1', 'งานประชาสัมพันธ์', null, null, '1592650366', '1592809249');
 INSERT INTO `auth_item` VALUES ('superadmin', '1', null, null, null, '1591337706', '1609767481');
 INSERT INTO `auth_item` VALUES ('user', '1', 'ผู้ใช้งานทั่วไป', null, null, '1591337468', '1592464583');
+INSERT INTO `auth_item` VALUES ('งานสุขภาพจิต', '2', null, null, null, '1612807041', '1612823787');
 
 -- ----------------------------
 -- Table structure for auth_item_child
@@ -245,10 +296,16 @@ CREATE TABLE `auth_item_child` (
 -- Records of auth_item_child
 -- ----------------------------
 INSERT INTO `auth_item_child` VALUES ('claimcode', '/gridview/export/download');
+INSERT INTO `auth_item_child` VALUES ('claimcode', '/hosxp/default/index');
 INSERT INTO `auth_item_child` VALUES ('claimcode', '/hosxp/default/report1');
 INSERT INTO `auth_item_child` VALUES ('claimcode', '/hosxp/visit-pttype/claimcode');
 INSERT INTO `auth_item_child` VALUES ('claimcode', '/hosxp/visit-pttype/index');
 INSERT INTO `auth_item_child` VALUES ('claimcode', '/hosxp/visit-pttype/update');
+INSERT INTO `auth_item_child` VALUES ('claimcode', '/site/about');
+INSERT INTO `auth_item_child` VALUES ('claimcode', '/site/api-err');
+INSERT INTO `auth_item_child` VALUES ('claimcode', '/site/api-error');
+INSERT INTO `auth_item_child` VALUES ('claimcode', '/site/captcha');
+INSERT INTO `auth_item_child` VALUES ('claimcode', '/site/contact');
 INSERT INTO `auth_item_child` VALUES ('claimcode', '/site/error');
 INSERT INTO `auth_item_child` VALUES ('claimcode', '/site/index');
 INSERT INTO `auth_item_child` VALUES ('claimcode', '/site/logout');
@@ -264,6 +321,20 @@ INSERT INTO `auth_item_child` VALUES ('user', '/depress/profile/*');
 INSERT INTO `auth_item_child` VALUES ('user', '/site/*');
 INSERT INTO `auth_item_child` VALUES ('user', '/user/security/logout');
 INSERT INTO `auth_item_child` VALUES ('user', '/user/settings/profile');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/depress/default/allsm');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/gridview/export/download');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/hosxp/default/index');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/hosxp/default/sm-dr');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/site/about');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/site/api-err');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/site/api-error');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/site/captcha');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/site/contact');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/site/error');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/site/index');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/site/logout');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/user/security/logout');
+INSERT INTO `auth_item_child` VALUES ('งานสุขภาพจิต', '/user/settings/profile');
 
 -- ----------------------------
 -- Table structure for auth_rule
@@ -298,7 +369,26 @@ CREATE TABLE `check_token` (
 -- ----------------------------
 -- Records of check_token
 -- ----------------------------
-INSERT INTO `check_token` VALUES ('1', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXN1bHQiOnsiZW1haWwiOiJhZG1pbkB0b29sc2hvcy50ZXN0In0sImlhdCI6MTYxMDk3Njc0NCwiZXhwIjoxNjEwOTk0NzQ0fQ.S1CxX3cZG9LPI9Qc8i9n0fB7hXNauuSf67ynuLwhiEk', null, '2021-01-18 20:32:24', null);
+
+-- ----------------------------
+-- Table structure for config
+-- ----------------------------
+DROP TABLE IF EXISTS `config`;
+CREATE TABLE `config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hospcode` varchar(5) DEFAULT NULL,
+  `befor_byear` date DEFAULT NULL,
+  `byear` date DEFAULT NULL,
+  `chwpart` char(2) DEFAULT NULL,
+  `amppart` char(2) DEFAULT NULL,
+  `thbyear` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of config
+-- ----------------------------
+INSERT INTO `config` VALUES ('1', '10918', '2020-09-30', '2021-01-01', '32', '05', '2564');
 
 -- ----------------------------
 -- Table structure for data_count
@@ -310,45 +400,11 @@ CREATE TABLE `data_count` (
   `date_count` datetime DEFAULT NULL,
   `process_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of data_count
 -- ----------------------------
-INSERT INTO `data_count` VALUES ('1', '0', '2021-01-04 23:19:37', '1');
-INSERT INTO `data_count` VALUES ('2', '128', '2021-01-04 23:20:16', '1');
-INSERT INTO `data_count` VALUES ('3', '123', '2021-01-04 23:20:50', '1');
-INSERT INTO `data_count` VALUES ('4', '2', '2021-01-04 23:23:26', '1');
-INSERT INTO `data_count` VALUES ('5', '2', '2021-01-04 23:24:55', '1');
-INSERT INTO `data_count` VALUES ('6', '165', '2021-01-04 23:25:08', '1');
-INSERT INTO `data_count` VALUES ('11', '0', '2021-01-04 23:55:33', '1');
-INSERT INTO `data_count` VALUES ('12', '0', '2021-01-04 23:56:06', '1');
-INSERT INTO `data_count` VALUES ('13', '2', '2021-01-04 23:56:50', '1');
-INSERT INTO `data_count` VALUES ('14', '0', '2021-01-08 20:59:56', '1');
-INSERT INTO `data_count` VALUES ('15', '0', '2021-01-08 21:21:14', '1');
-INSERT INTO `data_count` VALUES ('16', '0', '2021-01-08 21:23:19', '1');
-INSERT INTO `data_count` VALUES ('17', '0', '2021-01-08 21:23:56', '1');
-INSERT INTO `data_count` VALUES ('18', '0', '2021-01-08 21:25:43', '1');
-INSERT INTO `data_count` VALUES ('19', '0', '2021-01-08 23:55:07', '1');
-INSERT INTO `data_count` VALUES ('20', '0', '2021-01-09 23:55:07', '1');
-INSERT INTO `data_count` VALUES ('21', '0', '2021-01-10 03:21:39', '1');
-INSERT INTO `data_count` VALUES ('22', '0', '2021-01-10 03:48:56', '1');
-INSERT INTO `data_count` VALUES ('23', '0', '2021-01-10 03:52:19', '1');
-INSERT INTO `data_count` VALUES ('24', '89', '2021-01-10 03:56:22', '1');
-INSERT INTO `data_count` VALUES ('25', '0', '2021-01-10 03:57:08', '1');
-INSERT INTO `data_count` VALUES ('26', '0', '2021-01-10 07:46:37', '1');
-INSERT INTO `data_count` VALUES ('27', '0', '2021-01-10 23:55:07', '1');
-INSERT INTO `data_count` VALUES ('28', '0', '2021-01-11 09:59:59', '1');
-INSERT INTO `data_count` VALUES ('29', '0', '2021-01-11 10:25:44', '1');
-INSERT INTO `data_count` VALUES ('30', '0', '2021-01-11 23:55:07', '1');
-INSERT INTO `data_count` VALUES ('31', '0', '2021-01-12 10:14:44', '1');
-INSERT INTO `data_count` VALUES ('32', '0', '2021-01-12 23:55:08', '1');
-INSERT INTO `data_count` VALUES ('33', '0', '2021-01-13 23:55:08', '1');
-INSERT INTO `data_count` VALUES ('34', '36', '2021-01-14 23:55:07', '1');
-INSERT INTO `data_count` VALUES ('35', '263', '2021-01-15 23:55:07', '1');
-INSERT INTO `data_count` VALUES ('36', '96', '2021-01-16 23:55:07', '1');
-INSERT INTO `data_count` VALUES ('37', '100', '2021-01-17 23:55:08', '1');
-INSERT INTO `data_count` VALUES ('38', '0', '2021-01-18 20:32:29', '1');
 
 -- ----------------------------
 -- Table structure for date_process
@@ -363,7 +419,28 @@ CREATE TABLE `date_process` (
 -- ----------------------------
 -- Records of date_process
 -- ----------------------------
-INSERT INTO `date_process` VALUES ('1', '2021-01-18');
+INSERT INTO `date_process` VALUES ('1', '2021-02-09');
+
+-- ----------------------------
+-- Table structure for hos_basedata
+-- ----------------------------
+DROP TABLE IF EXISTS `hos_basedata`;
+CREATE TABLE `hos_basedata` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `base_data` varchar(255) DEFAULT NULL,
+  `detail` longtext,
+  `link` varchar(150) DEFAULT NULL,
+  `link2` varchar(150) DEFAULT NULL,
+  `active` enum('True','False') DEFAULT 'True',
+  `count_report` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=tis620 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of hos_basedata
+-- ----------------------------
+INSERT INTO `hos_basedata` VALUES ('1', 'รายงานนำเข้าคัดกรองบุหรี่ - สุรา', '', '/hosxp/default/sm-dr', '/mreport/rdu/*', 'True', null);
+INSERT INTO `hos_basedata` VALUES ('2', 'รายงาน ClaimCode', null, '/hosxp/default/report1', null, 'True', null);
 
 -- ----------------------------
 -- Table structure for menu
@@ -414,6 +491,26 @@ INSERT INTO `migration` VALUES ('m160312_050000_create_user', '1590648776');
 INSERT INTO `migration` VALUES ('m160929_103127_add_last_login_at_to_user_table', '1590650191');
 
 -- ----------------------------
+-- Table structure for pp_special_monit
+-- ----------------------------
+DROP TABLE IF EXISTS `pp_special_monit`;
+CREATE TABLE `pp_special_monit` (
+  `vn` varchar(12) NOT NULL,
+  `entry_datetime` datetime DEFAULT NULL,
+  `hn` varchar(9) DEFAULT NULL,
+  PRIMARY KEY (`vn`),
+  KEY `ix_vn` (`vn`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=tis620;
+
+-- ----------------------------
+-- Records of pp_special_monit
+-- ----------------------------
+INSERT INTO `pp_special_monit` VALUES ('640207141439', '2021-02-07 14:24:39', '000012011');
+INSERT INTO `pp_special_monit` VALUES ('640209032531', '2021-02-09 03:35:31', '000024915');
+INSERT INTO `pp_special_monit` VALUES ('640209032844', '2021-02-09 03:38:44', '000004798');
+INSERT INTO `pp_special_monit` VALUES ('640209032958', '2021-02-09 03:39:58', '000121839');
+
+-- ----------------------------
 -- Table structure for profile
 -- ----------------------------
 DROP TABLE IF EXISTS `profile`;
@@ -442,7 +539,9 @@ CREATE TABLE `profile` (
 -- ----------------------------
 -- Records of profile
 -- ----------------------------
-INSERT INTO `profile` VALUES ('1', 'นายทดสอบ ระบบงาน', null, 'admin@toolshos.test', null, null, null, null, null, null, null, null, null, null, null, null, '');
+INSERT INTO `profile` VALUES ('1', 'นายทดสอบ ระบบงาน', null, 'admin@toolshos.test', null, null, null, null, null, '1', '##Psmi50584@', null, null, null, null, null, '');
+INSERT INTO `profile` VALUES ('2', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `profile` VALUES ('3', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for social_account
@@ -526,12 +625,14 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_unique_username` (`username`) USING BTREE,
   UNIQUE KEY `user_unique_email` (`email`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', 'admin@toolshos.test', '10', '$2y$12$NJHlHtVF5U..9kMgl41JzOEHoNtBVffj56TB1o3hDOzGhNJDhJSSW', 'cqxz7TrkKeR_94e5PwHCE2SETcs4KhKV', '1592649000', 'admin@Toolshos.test', null, '127.0.0.1', '1590650584', '1609769211', '0', '1610964856', '1', 'admin');
+INSERT INTO `user` VALUES ('1', 'admin', 'admin@toolshos.test', '10', '$2y$12$NJHlHtVF5U..9kMgl41JzOEHoNtBVffj56TB1o3hDOzGhNJDhJSSW', 'cqxz7TrkKeR_94e5PwHCE2SETcs4KhKV', '1592649000', 'admin@Toolshos.test', null, '127.0.0.1', '1590650584', '1609769211', '0', '1612823773', '1', 'admin');
+INSERT INTO `user` VALUES ('2', 'card1', 'card1@toolshos.test', '10', '$2y$12$OHBEXgqRo5DOvgLjHscbcu5lH1CS90O9G8ROnOfTqOfGe8ym8pInW', 'o9RW-Xaxt6gvqoWiFATJda0Y2zXtJqPt', '1612819267', null, null, '127.0.0.1', '1612819267', '1612819267', '0', '1612819797', '20', 'card1');
+INSERT INTO `user` VALUES ('3', 'user1', 'user1@tools.com', '10', '$2y$12$uJwTCW35FU5uzzEfe4CxveODmhla8i31Xy8DblSMgMnJ/Mv58dEc.', 'g4NM39cpm9sjye9YzqchRTL0c2bsHwI9', '1612819660', null, null, '127.0.0.1', '1612819660', '1612819660', '0', '1612823633', '0', null);
 
 -- ----------------------------
 -- Table structure for user_hos
@@ -545,12 +646,14 @@ CREATE TABLE `user_hos` (
   `user_role` int(11) DEFAULT '10',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_unique_email` (`email`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of user_hos
 -- ----------------------------
 INSERT INTO `user_hos` VALUES ('1', '', 'admin@toolshos.test', '$2b$10$jXLKtxAvSmlSEsFqiLa/hOrxVq6VopQXz7UnMxQFqeyuTE7GcZkDa', '1');
+INSERT INTO `user_hos` VALUES ('2', '', 'card1@toolshos.test', '$2b$10$NR34n6/fRzpqKOj9ruDuw.6ZOsI6fxVRw0bxqT5p8Ns4QDsPbskY.', '10');
+INSERT INTO `user_hos` VALUES ('3', '', 'user1@tools.com', '$2b$10$w9tJtHw0N5mVCo3tMd1Z1uK4rVFb0Z9owBZGXRNcwpon/CaVf1KDO', '10');
 
 -- ----------------------------
 -- Table structure for user_log
@@ -568,3 +671,23 @@ CREATE TABLE `user_log` (
 -- ----------------------------
 -- Records of user_log
 -- ----------------------------
+
+-- ----------------------------
+-- Procedure structure for update_byear
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `update_byear`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `update_byear`()
+BEGIN
+
+SET @b_year := DATE_FORMAT(NOW(),'%Y');
+SET @thbyear := @b_year+544;
+update config c
+SET thbyear = @thbyear;
+
+update config c
+SET c.befor_byear = concat((thbyear-544),'-09-30'),c.byear = concat((thbyear-543),'-01-01');
+
+END
+;;
+DELIMITER ;
